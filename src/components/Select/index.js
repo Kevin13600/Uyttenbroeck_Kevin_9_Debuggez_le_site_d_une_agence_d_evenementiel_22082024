@@ -5,21 +5,34 @@ import PropTypes from "prop-types";
 
 import "./style.scss";
 
-const Select = ({
-  selection,
-  onChange,
-  name,
-  titleEmpty,
-  label,
-  type = "normal",
-}) => {
+const Select = ({selection, onChange, name, titleEmpty, label, type = "normal",}) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
+  
+  
+  /*
   const changeValue = (newValue) => {
-    onChange();
+  onChange();
+  setValue(newValue);
+  setCollapsed(newValue);
+};
+  */
+  
+  const changeValue = (newValue) => {
+    onChange(newValue);
     setValue(newValue);
-    setCollapsed(newValue);
+    setCollapsed(true);
   };
+
+  /*
+
+  Ces modifications apporteront les changements suivants :
+
+  - La fonction onChange sera appelée avec la nouvelle valeur sélectionnée (newValue), permettant au composant parent de réagir au changement et d'effectuer le tri des images.
+  - Le setCollapsed(true) fermera le menu déroulant après la sélection d'une option.
+
+*/
+
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}

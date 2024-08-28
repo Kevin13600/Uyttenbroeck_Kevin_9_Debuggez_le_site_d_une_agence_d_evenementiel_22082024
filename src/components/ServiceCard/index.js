@@ -1,5 +1,8 @@
 import PropTypes from "prop-types";
 
+// PropTypes est un mécanisme de vérification de type pour les props en React. Il permet de déclarer les types attendus pour les props d'un composant.
+
+
 import "./style.scss";
 
 const ServiceCard = ({ imageSrc, imageAlt, children }) => (
