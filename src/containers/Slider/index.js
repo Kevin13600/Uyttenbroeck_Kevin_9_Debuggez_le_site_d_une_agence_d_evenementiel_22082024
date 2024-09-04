@@ -18,7 +18,7 @@ const Slider = () => {
   const nextCard = () => {
     setTimeout(
       // () => setIndex(index < byDateDesc.length ? index + 1 : 0),
-      () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
+      () => setIndex(index + 1 < byDateDesc?.length ? index + 1 : 0),
       5000
     );
   };
@@ -37,7 +37,7 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <div key={event.id}>
+        <div key={event.title}>
           <div
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
@@ -56,7 +56,7 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((evt, radioIdx) => (
               <input
-                key={`radio-${evt.id}`}
+                key={`radio-${evt.title}`}
                 type="radio"
                 name="radio-button"
                 checked={index === radioIdx}
@@ -70,6 +70,7 @@ const Slider = () => {
     </div>
   );
 };
+
 
 // <div key={event.id}> Ajout d'une clé unique pour chaque élément de la liste principale
 // key={`radio-${evt.id}`} Modification de la clé des boutons radio : Au lieu d'utiliser l'index du tableau (qui est déconseillé), nous utilisons maintenant l'ID unique de chaque événement pour générer la clé 

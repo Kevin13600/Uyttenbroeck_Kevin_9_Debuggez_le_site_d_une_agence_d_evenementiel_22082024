@@ -34,8 +34,20 @@ const EventList = () => {
   
   */
   
-  const filteredEvents = (data?.events || [])
-  .filter(event => !type || event.type === type)
+ const filteredEvents = (data?.events || [])
+  .filter(event => {
+    if (type === "Toutes" || !type) {
+      return true; // Inclure tous les événements pour "Toutes" ou si aucun type n'est sélectionné
+    }
+    return event.type === type; // Filtrer par type pour les autres options
+  })
+  .sort((a, b) => {
+    if (type === "Toutes" || !type) {
+      // Tri numérique par ID pour "Toutes"
+      return a.id - b.id;
+    }
+    return 0; // Pas de tri supplémentaire pour les autres types
+  })
   .filter((event, index) => {
     const startIndex = (currentPage - 1) * PER_PAGE;
     const endIndex = startIndex + PER_PAGE;
@@ -59,6 +71,7 @@ const EventList = () => {
   };
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
+  
   return (
     <>
       {error && <div>An error occured</div>}
