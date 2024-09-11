@@ -15,10 +15,8 @@ const EventList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   
   
-  /* const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
+  const filteredEvents = (
+    (!type ? data?.events : data?.events.filter((evt) => type === evt.type)) || []
   ).filter((event, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
@@ -29,41 +27,6 @@ const EventList = () => {
     return false;
   }); 
   
-  - Cette logique ne filtre pas réellement les événements en fonction du type sélectionné. Elle retourne toujours tous les événements, qu'un type soit sélectionné ou non.
-  - De plus, le filtrage par pagination est effectué sur l'ensemble des événements, pas sur les événements déjà filtrés par type.
-  
-  */
-  
- const filteredEvents = (data?.events || [])
-  .filter(event => {
-    if (type === "Toutes" || !type) {
-      return true; // Inclure tous les événements pour "Toutes" ou si aucun type n'est sélectionné
-    }
-    return event.type === type; // Filtrer par type pour les autres options
-  })
-  .sort((a, b) => {
-    if (type === "Toutes" || !type) {
-      // Tri numérique par ID pour "Toutes"
-      return a.id - b.id;
-    }
-    return 0; // Pas de tri supplémentaire pour les autres types
-  })
-  .filter((event, index) => {
-    const startIndex = (currentPage - 1) * PER_PAGE;
-    const endIndex = startIndex + PER_PAGE;
-    return index >= startIndex && index < endIndex;
-  });
-
-  /* 
-  
-  - Cette correction filtrera d'abord les événements par type (si un type est sélectionné), puis appliquera la pagination sur le résultat.
-
-  -  Autres observations :
-
-  - Le composant gère correctement les états de chargement et d'erreur.
-  - La pagination est mise en place, mais le calcul de pageNumber devrait être ajusté pour refléter le nombre correct de pages après le filtrage par type.
-  
-  */
   
   const changeType = (evtType) => {
     setCurrentPage(1);

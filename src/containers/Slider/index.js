@@ -10,30 +10,21 @@ const Slider = () => {
   
  
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    // new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
   new Date(evtB.date) - new Date(evtA.date)
-    // Cette modification assure que les événements les plus récents apparaissent en premier.
   );
 
   const nextCard = () => {
     setTimeout(
-      // () => setIndex(index < byDateDesc.length ? index + 1 : 0),
       () => setIndex(index + 1 < byDateDesc?.length ? index + 1 : 0),
       5000
     );
   };
   
-  /* useEffect(() => {
+  useEffect(() => {
     nextCard();
   });
-  */
-  useEffect(() => {
-    const timer = nextCard();
-    return () => clearTimeout(timer);
-  }, [index]);
-
-  // Optimisation de l'effet useEffect : L'effet a été modifié pour nettoyer le timer et dépendre de l'index
-  // Cela permet d'éviter des appels inutiles et de nettoyer correctement le timer.
+  
+ 
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
@@ -56,7 +47,7 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((evt, radioIdx) => (
               <input
-                key={`radio-${evt.title}`}
+                key={`radio-${evt.id}`}
                 type="radio"
                 name="radio-button"
                 checked={index === radioIdx}
